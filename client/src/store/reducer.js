@@ -1,39 +1,50 @@
+import { nanoid } from "nanoid";
 import {
-  GET_LIST,
-  ADD_TO_LIST,
-  REMOVE_FROM_LIST,
-  UPDATE_LIST
-} from './actionTypes';
+  GET_FORMS,
+  START_LOADING,
+  END_LOADING,
+  REMOVE_TOAST_MSG,
+  ADD_TOAST_MSG,
+  GET_RECEIPTS,
+} from "./actionTypes";
 
 export default function reducer(state, action) {
   switch (action.type) {
-    case GET_LIST:
+    case START_LOADING:
       return {
         ...state,
-        list: action.payload
-      }
-    case ADD_TO_LIST:
-      const newItem = action.payload;
+        apiCallsInProgress: state.apiCallsInProgress + 1,
+      };
+    case END_LOADING:
       return {
         ...state,
-        list: [...state.list, newItem]
-      }
-    case UPDATE_LIST:
-      const editedList = action.payload;
-      const updatedList = state.list.map(item => item._id === editedList._id ? editedList : item)
+        apiCallsInProgress: state.apiCallsInProgress - 1,
+      };
+    case GET_FORMS:
       return {
         ...state,
-        list: updatedList
-      }
-    case REMOVE_FROM_LIST:
-      const filteredList = state.list.filter(item => item._id !== action.payload)
+        forms: action.payload,
+      };
+    case GET_RECEIPTS:
       return {
         ...state,
-        list: filteredList
-      }
-    default:
-      {
-        return state;
-      }
+        receipts: action.payload,
+      };
+    case ADD_TOAST_MSG:
+      return {
+        ...state,
+        toastMsgs: [...state.toastMsgs, { ...action.payload, id: nanoid() }],
+      };
+    case REMOVE_TOAST_MSG:
+      const newToastMsgs = state.toastMsgs.filter(
+        (msg) => msg.id !== action.payload.id
+      );
+      return {
+        ...state,
+        toastMsgs: newToastMsgs ? [...newToastMsgs] : [],
+      };
+    default: {
+      return state;
+    }
   }
 }

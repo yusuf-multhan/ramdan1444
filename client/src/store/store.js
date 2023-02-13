@@ -1,7 +1,10 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 const Store = createContext({
-  list: []
-})
+  forms: [],
+  receipts: [],
+  apiCallsInProgress: 0,
+  toastMsgs: [],
+});
 
 export default Store;

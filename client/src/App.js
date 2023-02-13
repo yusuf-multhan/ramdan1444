@@ -1,55 +1,45 @@
-import React, { useContext, useReducer, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import React, { useContext, useReducer } from "react";
+import { Routes, Route } from "react-router-dom";
 
-import Store from './store/store';
-import reducer from './store/reducer';
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import List from './components/List/List';
-import Form from './components/Form/Form';
-import Image from './components/Image/Image';
-
-import style from './App.module.scss';
+import Store from "./store/store";
+import reducer from "./store/reducer";
+import Layout from "./components/Layout";
+import Home from "./components/Home";
+import { Form, FormList } from "./components/Form";
+import { Receipt, ReceiptList } from "./components/Receipt";
+import { Dashboard } from "./components/Dashboard";
+import Header from "./components/Header";
+import { Page404 } from "./constants";
 
 const App = () => {
   const initialState = useContext(Store);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [formView, setFormView] = useState(false);
-  const [edit, setEdit] = useState(false);
-
-  const setView = () => setFormView(!formView);
-
-  const closeForm = () => setFormView(false);
-
-  const editItem = item => {
-    setEdit(item);
-    setFormView(true);
-  };
-
-  const clearEdit = () => {
-    setEdit(false);
-  }
 
   return (
     <Store.Provider value={{ state, dispatch }}>
-      <div className={style.app}>
-        <div className={style.todo}>
-          <Image />
-          <span className={style.button} onClick={setView}>
-            <FontAwesomeIcon icon={faPlus} className={formView ? style.rotate : ''} />
-          </span>
-          <div className={style.body}>
-            {
-              formView
-                ? <Form closeForm={closeForm} edit={edit} clearEdit={clearEdit} />
-                : <List editItem={editItem} />
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path={"/newform"} element={<Form />} />
+          <Route path={"/editform/:formNo"} element={<Form isEdit />} />
+          <Route path={"/formlist"} element={<FormList />} />
+          <Route path={"/newreceipt"} element={<Receipt />} />
+          <Route path={"/receiptlist"} element={<ReceiptList />} />
+          <Route path={"/dashboard"} element={<Dashboard />} />
+          <Route
+            path={"*"}
+            element={
+              <>
+                <Header header={Page404} />
+              </>
             }
-          </div>
-        </div>
-        <a href="http://drejcreative.com">By Drej Creative</a>
-      </div>
+          />
+        </Routes>
+      </Layout>
     </Store.Provider>
   );
-}
+};
 
 export default App;
