@@ -220,6 +220,7 @@ export const radialChartConfig = (data) => {
       },
       title: {
         text: data.titleText,
+        fontWeight: 700,
       },
       labels: data.labels,
       legend: {
@@ -282,6 +283,7 @@ export const barChartConfig = (data) => {
       },
       title: {
         text: data.titleText,
+        fontWeight: 700,
       },
       xaxis: {
         categories: data.xaxisCategories,
