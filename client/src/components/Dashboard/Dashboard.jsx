@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@mui/material";
 import React from "react";
-import { MARKAZ_CONST } from "../../constants";
+import { CHAIRS_UNIT, MARKAZ_CONST, ZABIHAT_UNIT } from "../../constants";
 import { formService } from "../../services/formService";
 import { GET_FORMS } from "../../store/actionTypes";
 import { getDashboardMetric, useCustomHook } from "../common-components";
@@ -103,7 +103,11 @@ const Dashboard = () => {
                             {dashboardMetric[item.value]?.takhmeenAmount ?? 0}
                           </TableCell>
                           <TableCell align="right">
-                            {dashboardMetric[item.value]?.zabihat ?? 0}
+                            {dashboardMetric[item.value]?.zabihat
+                              ? `${
+                                  dashboardMetric[item.value]?.zabihat
+                                } x ${ZABIHAT_UNIT}`
+                              : 0}
                           </TableCell>
                           <TableCell align="right">
                             {dashboardMetric[item.value]?.niyaaz ?? 0}
@@ -112,7 +116,11 @@ const Dashboard = () => {
                             {dashboardMetric[item.value]?.iftaari ?? 0}
                           </TableCell>
                           <TableCell align="right">
-                            {dashboardMetric[item.value]?.chairs ?? 0}
+                            {dashboardMetric[item.value]?.chairs
+                              ? `${
+                                  dashboardMetric[item.value]?.chairs
+                                } x ${CHAIRS_UNIT}`
+                              : 0}
                           </TableCell>
                           <TableCell sx={{ fontWeight: "bold" }} align="right">
                             {dashboardMetric[item.value]?.grandTotal ?? 0}
@@ -131,7 +139,9 @@ const Dashboard = () => {
                         {dashboardMetric["total"].takhmeenAmount}
                       </TableCell>
                       <TableCell sx={{ fontWeight: "bold" }} align="right">
-                        {dashboardMetric["total"].zabihat}
+                        {dashboardMetric["total"].zabihat
+                          ? `${dashboardMetric["total"].zabihat} x ${ZABIHAT_UNIT}`
+                          : 0}
                       </TableCell>
                       <TableCell sx={{ fontWeight: "bold" }} align="right">
                         {dashboardMetric["total"].niyaaz}
@@ -140,7 +150,9 @@ const Dashboard = () => {
                         {dashboardMetric["total"].iftaari}
                       </TableCell>
                       <TableCell sx={{ fontWeight: "bold" }} align="right">
-                        {dashboardMetric["total"].chairs}
+                        {dashboardMetric["total"].chairs
+                          ? `${dashboardMetric["total"].chairs} x ${CHAIRS_UNIT}`
+                          : 0}
                       </TableCell>
                       <TableCell sx={{ fontWeight: "bold" }} align="right">
                         {dashboardMetric["total"].grandTotal}

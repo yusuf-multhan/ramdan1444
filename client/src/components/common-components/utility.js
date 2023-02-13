@@ -205,17 +205,15 @@ export const radialChartConfig = (data) => {
           endAngle: 270,
           hollow: {
             margin: 5,
-            size: "30%",
+            size: "20%",
             background: "transparent",
           },
           dataLabels: {
             name: {
               show: false,
-              fontSize: "22px",
             },
             value: {
               show: false,
-              fontSize: "16px",
             },
           },
         },
@@ -227,23 +225,17 @@ export const radialChartConfig = (data) => {
       legend: {
         show: true,
         floating: true,
-        fontSize: "16px",
+        fontSize: "14px",
         position: "left",
-        offsetX: 100,
-        offsetY: 35,
+        offsetX: 120,
+        offsetY: 30,
         labels: {
           useSeriesColors: true,
-        },
-        markers: {
-          size: 0,
         },
         formatter: function (seriesName, opts) {
           return (
             seriesName + ":  " + opts.w.globals.series[opts.seriesIndex] + "%"
           );
-        },
-        itemMargin: {
-          vertical: 3,
         },
       },
     },

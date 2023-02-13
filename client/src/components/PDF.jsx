@@ -66,7 +66,7 @@ const Passes = ({ familyMembers = [], HOFITS, formNo, markaz }) => (
     <Page size="A4" style={styles.page}>
       {familyMembers.map((fm, i) => {
         return (
-          <View key={fm.its} style={styles.sectionWrapper}>
+          <View key={fm.its} style={styles.sectionWrapper} break={i !== 0}>
             <View style={styles.passHeader}>
               <Text>{PASSES_HEADER}</Text>
             </View>
