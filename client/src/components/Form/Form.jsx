@@ -67,6 +67,7 @@ const MaterialFormComponent = (props) => {
   });
   watch("HOFId", "familyMembers");
   const {
+    markaz,
     HOFId,
     HOFAddress,
     familyMembers,
@@ -223,7 +224,11 @@ const MaterialFormComponent = (props) => {
                       size="small"
                       name="markaz"
                       defaultValue={"ZM"}
-                      {...register("markaz")}
+                      value={markaz}
+                      onChange={(e) => {
+                        reset({...initialValues, markaz: e.target.value});
+                        reRender(!render);
+                      }}
                     >
                       {MARKAZ_CONST.map((item) => {
                         return (
