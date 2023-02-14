@@ -311,7 +311,8 @@ const MaterialFormComponent = (props) => {
                   familyMembers,
                   handleDeleteMember: (its) => {
                     const newFms = JSON.parse(JSON.stringify(familyMembers));
-                    newFms.splice((fm) => fm.its === its, 1);
+                    const index = newFms.findIndex(its); 
+                    index > -1 && newFms.splice(index, 1);
                     setValue("familyMembers", newFms);
                     reRender(!render);
                   },
