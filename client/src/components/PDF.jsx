@@ -6,14 +6,26 @@ import {
   View,
   StyleSheet,
   Image,
+  Font,
 } from "@react-pdf/renderer";
-import { MARKAZ_CONST, PASSES_HEADER, RECEIPT_HEADER } from "../constants";
+import { MARKAZ_CONST, RECEIPT_HEADER } from "../constants";
+
+// Register font
+import robotoBold from "../Fonts/Roboto/Roboto-Bold.ttf";
+import robotoItalic from "../Fonts/Roboto/Roboto-Italic.ttf";
+Font.register({
+  family: "Roboto-Bold",
+  src: robotoBold,
+});
+Font.register({
+  family: "Roboto-Italic",
+  src: robotoItalic,
+});
 
 // Create styles
 const styles = StyleSheet.create({
   page: {
     backgroundColor: "white",
-    fontFamily: "Helvetica",
     fontSize: 12,
   },
   sectionWrapper: {
@@ -27,8 +39,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    paddingRight: "10px",
-    width: 75,
+    paddingLeft: "10px",
+    paddingBottom: "5px",
+    width: 55,
   },
   passHeader: {
     display: "flex",
@@ -58,45 +71,129 @@ const styles = StyleSheet.create({
     textDecoration: "underline",
     fontWeight: 700,
   },
+  passWrapper: {
+    margin: "10 auto",
+    border: "3px solid black",
+    width: "50%",
+  },
+  passHead: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#C4D5A7",
+  },
+  headerTextWrapper: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    flexGrow: 1,
+  },
+  headTextCommon: {
+    alignSelf: "center",
+    color: "#3c4136",
+    fontFamily: "Roboto-Bold",
+    fontSize: "12px",
+  },
+  headText: {
+    fontSize: "14px",
+    letterSpacing: "1px",
+  },
 });
 
 // Create Document Component
 const Passes = ({ familyMembers = [], HOFITS, formNo, markaz }) => (
-  <Document>
+  <Document width={"100%"}>
     <Page size="A4" style={styles.page}>
       {familyMembers.map((fm, i) => {
         return (
-          <View key={fm.its} style={styles.sectionWrapper} break={i !== 0}>
-            <View style={styles.passHeader}>
-              <Text>{PASSES_HEADER}</Text>
-            </View>
-            <View style={styles.section} break={i !== 0}>
+          <View key={fm.its} style={styles.passWrapper} break={i !== 0}>
+            <View style={styles.passHead}>
               <Image src={"/logo.png"} style={styles.logo} />
-              <View style={styles.wrapper}>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.textLabel}>Markaz</Text>
-                  <Text style={{ ...styles.textValue, ...styles.textHead }}>
-                    {MARKAZ_CONST.find((i) => i.value === markaz)?.displayVal ??
-                      markaz}
-                  </Text>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.textLabel}>Form number</Text>
-                  <Text style={styles.textValue}>{formNo}</Text>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.textLabel}>HOF ITS</Text>
-                  <Text style={styles.textValue}>{HOFITS}</Text>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.textLabel}>Name</Text>
-                  <Text style={styles.textValue}>{fm.name}</Text>
-                </View>
-                <View style={styles.textWrapper}>
-                  <Text style={styles.textLabel}>ITS</Text>
-                  <Text style={styles.textValue}>{fm.its}</Text>
-                </View>
+              <View style={styles.headerTextWrapper}>
+                <Text style={{ ...styles.headTextCommon, ...styles.headText }}>
+                  Anjuman-E-Fakhri Pune
+                </Text>
+                <Text style={styles.headTextCommon}>{`${
+                  MARKAZ_CONST.find((i) => i.value === markaz)?.displayVal
+                } Shehrulla1444`}</Text>
               </View>
+            </View>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                padding: "5px",
+              }}
+            >
+              <Text
+                style={{
+                  alignSelf: "flex-end",
+                  paddingRight: "15px",
+                  fontSize: "10px",
+                  fontFamily: "Roboto-Bold",
+                }}
+              >{`Card # : ${formNo}/${i + 1}`}</Text>
+              <View
+                style={{
+                  fontFamily: "Roboto-Bold",
+                  fontSize: "13px",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ width: "20%" }}>ITS ID</Text>
+                <Text style={{ marginRight: "10px" }}>:</Text>
+                <Text
+                  style={{
+                    border: "2px solid black",
+                    padding: "3px 5px",
+                  }}
+                >
+                  {fm.its}
+                </Text>
+              </View>
+              <View
+                style={{
+                  paddingTop: "3px",
+                  fontSize: "12px",
+                  flexDirection: "row",
+                }}
+              >
+                <Text style={{ width: "20%" }}>Name</Text>
+                <Text style={{ marginRight: "10px" }}>:</Text>
+                <Text>{fm.name}</Text>
+              </View>
+              <View
+                style={{
+                  paddingTop: "3px",
+                  fontSize: "12px",
+                  flexDirection: "row",
+                }}
+              >
+                <Text style={{ width: "20%" }}>Gender</Text>
+                <Text style={{ marginRight: "10px" }}>:</Text>
+                <Text>{fm.gender}</Text>
+              </View>
+              <View
+                style={{
+                  paddingTop: "3px",
+                  fontSize: "12px",
+                  flexDirection: "row",
+                }}
+              >
+                <Text style={{ width: "20%" }}>Age</Text>
+                <Text style={{ marginRight: "10px" }}>:</Text>
+                <Text>{fm.age}</Text>
+              </View>
+              <Text
+                style={{
+                  marginTop: "15px",
+                  fontFamily: "Roboto-Italic",
+                  fontSize: "8px",
+                }}
+              >
+                Note: Non-Transferable, Please carry this card everyday
+              </Text>
             </View>
           </View>
         );
