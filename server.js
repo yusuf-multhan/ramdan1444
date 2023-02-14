@@ -50,7 +50,7 @@ if (process.env.NODE_ENV === "production") {
 app.use("/api/v1/takhmeenform", takhmeenForm);
 app.use("/api/v1/hof", hofDetails);
 app.use("/api/v1/receipts", receipts);
-
+app.get('*', function(req, res) {res.sendFile(path.join(__dirname + '/client/build/index.html')); });
 // ----------------------------------
 // Express server
 // ----------------------------------
