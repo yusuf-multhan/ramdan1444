@@ -224,7 +224,6 @@ const MaterialFormComponent = (props) => {
                       name="markaz"
                       defaultValue={"ZM"}
                       {...register("markaz")}
-                      onBlur={handleHOFIdBlur}
                     >
                       {MARKAZ_CONST.map((item) => {
                         return (
