@@ -126,7 +126,7 @@ const MaterialFormComponent = (props) => {
         }),
         formService.isFormExistByHOF(e.target.value),
       ]);
-      if (data[1]?.data?.exists) {
+      if (data[1]?.data?.length && checkIfFormExists(data[1]?.data)) {
         addToastMsg("Data already exists for this HOF", "error");
         reset();
       } else if (data[0]?.data?.length) {
@@ -161,6 +161,12 @@ const MaterialFormComponent = (props) => {
     }
     endLoading();
   };
+
+  const checkIfFormExists = (data) => {
+    const vals = getValues();
+    const exists = data.find(d => d.markaz === vals.markaz);
+    return exists ? true : false;
+  }
 
   // I know its dirty, but got no other way to re render when delete member
   const [render, reRender] = useState(false);
@@ -311,7 +317,8 @@ const MaterialFormComponent = (props) => {
                   familyMembers,
                   handleDeleteMember: (its) => {
                     const newFms = JSON.parse(JSON.stringify(familyMembers));
-                    newFms.splice((fm) => fm.its === its, 1);
+                    const index = newFms.findIndex(its); 
+                    index > -1 && newFms.splice(index, 1);
                     setValue("familyMembers", newFms);
                     reRender(!render);
                   },

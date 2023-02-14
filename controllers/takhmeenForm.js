@@ -25,14 +25,14 @@ exports.get = async (req, res) => {
 exports.getByHOF = async (req, res) => {
   try {
     const hofId = req.params.hofid;
-    const form = await TakhmeenForm.findOne({ HOFId: hofId });
-    const data = {
-      form,
-      exists: form ? true : false,
-    };
+    const forms = await TakhmeenForm.find({ HOFId: hofId });
+    // const data = {
+    //   form,
+    //   exists: form ? true : false,
+    // };
     res.status(200).json({
       success: true,
-      data: data,
+      data: forms,
     });
   } catch (error) {
     console.log("API error", error);
