@@ -29,6 +29,18 @@ if (process.env.NODE_ENV === "development") {
 }
 
 if (process.env.NODE_ENV === "production") {
+  app.get("*.js", function (req, res, next) {
+    req.url = req.url + ".br";
+    res.set("Content-Encoding", "br");
+    res.set("Content-Type", "text/javascript");
+    next();
+  });
+  app.get("*.css", function (req, res, next) {
+    req.url = req.url + ".br";
+    res.set("Content-Encoding", "br");
+    res.set("Content-Type", "text/css");
+    next();
+  });
   app.use(express.static(path.join(__dirname, "./client/build")));
 }
 
