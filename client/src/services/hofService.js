@@ -8,7 +8,7 @@ export class hofService {
   static async getMembersByHOF(id) {
     try {
       const response = await axios.get(this.url + "/" + id);
-      return { data: response.data.data, isOK: response.statusText === "OK" };
+      return { data: response.data.data, isOK: response.staus < 400 };
     } catch (error) {
       return error;
     }
