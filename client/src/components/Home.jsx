@@ -82,6 +82,7 @@ export default function Home() {
             onClick={() => {
               navigate("/dashboard");
             }}
+            hidden
           >
             Dashboard
           </Button>
