@@ -8,11 +8,13 @@ import {
   Image,
   Font,
 } from "@react-pdf/renderer";
-import { MARKAZ_CONST, RECEIPT_HEADER } from "../constants";
+import { MARKAZ_CONST } from "../constants";
 
 // Register font
 import robotoBold from "../Fonts/Roboto/Roboto-Bold.ttf";
 import robotoItalic from "../Fonts/Roboto/Roboto-Italic.ttf";
+import roboto from "../Fonts/Roboto/Roboto-Regular.ttf";
+import robotoThin from "../Fonts/Roboto/Roboto-Thin.ttf";
 Font.register({
   family: "Roboto-Bold",
   src: robotoBold,
@@ -21,6 +23,14 @@ Font.register({
   family: "Roboto-Italic",
   src: robotoItalic,
 });
+Font.register({
+  family: "Roboto-Regular",
+  src: roboto,
+});
+Font.register({
+  family: "Roboto-Thin",
+  src: robotoThin,
+});
 
 // Create styles
 const styles = StyleSheet.create({
@@ -28,48 +38,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     fontSize: 12,
   },
-  sectionWrapper: {
-    margin: 10,
-    padding: 10,
-    border: "1px solid black",
-  },
-  section: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
   logo: {
     paddingLeft: "10px",
     paddingBottom: "5px",
     width: 55,
-  },
-  passHeader: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: "10px",
-    fontSize: 14,
-  },
-  wrapper: {
-    display: "flex",
-    flexDirection: "column",
-    flexGrow: 1,
-  },
-  textWrapper: {
-    display: "flex",
-    flexDirection: "row",
-    paddingBottom: "5px",
-  },
-  textLabel: {
-    width: "35%",
-  },
-  textValue: {
-    width: "65%",
-  },
-  textHead: {
-    textDecoration: "underline",
-    fontWeight: 700,
   },
   passWrapper: {
     margin: "10 auto",
@@ -202,56 +174,131 @@ const Passes = ({ familyMembers = [], HOFITS, formNo, markaz }) => (
   </Document>
 );
 
-const ReceiptsPDF = ({ receipt, HOFITS, HOFName, formNo }) => (
+const ReceiptsPDF = ({
+  receipt,
+  HOFITS,
+  HOFName,
+  formNo,
+  markaz = "Burhani Hall",
+}) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      <View style={styles.sectionWrapper}>
-        <View style={styles.passHeader}>
-          <Text>{RECEIPT_HEADER}</Text>
-        </View>
-        <View style={styles.section} key={receipt.receiptNo}>
-          <Image src={"/logo.png"} style={styles.logo} />
-          <View style={styles.wrapper}>
-            <View style={styles.textWrapper}>
-              <Text style={styles.textLabel}>Receipt No</Text>
-              <Text style={{ ...styles.textValue, ...styles.textHead }}>
-                {receipt.receiptNo}
-              </Text>
-            </View>
-            <View style={styles.textWrapper}>
-              <Text style={styles.textLabel}>Form number</Text>
-              <Text style={styles.textValue}>{formNo}</Text>
-            </View>
-            <View style={styles.textWrapper}>
-              <Text style={styles.textLabel}>HOF ITS</Text>
-              <Text style={styles.textValue}>{HOFITS}</Text>
-            </View>
-            <View style={styles.textWrapper}>
-              <Text style={styles.textLabel}>HOF Name</Text>
-              <Text style={styles.textValue}>{HOFName}</Text>
-            </View>
-            <View style={styles.textWrapper}>
-              <Text style={styles.textLabel}>Amount</Text>
-              <Text style={styles.textValue}>{receipt.amount}</Text>
-            </View>
-            <View style={styles.textWrapper}>
-              <Text style={styles.textLabel}>Mode</Text>
-              <Text style={styles.textValue}>{receipt.mode}</Text>
-            </View>
-            <View style={styles.textWrapper}>
-              <Text style={styles.textLabel}>Payment date</Text>
-              <Text style={styles.textValue}>{receipt.date}</Text>
-            </View>
-            {receipt.details ? (
-              <View style={styles.textWrapper}>
-                <Text style={styles.textLabel}>Payment remarks</Text>
-                <Text style={styles.textValue}>{receipt.details}</Text>
-              </View>
-            ) : (
-              ""
-            )}
-          </View>
-        </View>
+      <View
+        style={{
+          margin: "20px",
+          padding: "10px",
+          border: "1px solid black",
+          flexDirection: "column",
+        }}
+      >
+        <Text
+          style={{
+            marginTop: "5px",
+            fontFamily: "Roboto-Bold",
+            fontSize: "12px",
+            alignSelf: "center",
+          }}
+        >
+          {`Anjuman-E-Fakhri ${markaz}`}
+        </Text>
+        <Text
+          style={{
+            marginTop: "15px",
+            fontFamily: "Roboto-Bold",
+            fontSize: "18px",
+            alignSelf: "center",
+            color: "#800000",
+          }}
+        >
+          NIYAAZ TANZEEM
+        </Text>
+        <Text
+          style={{
+            marginTop: "15px",
+            fontFamily: "Roboto-Bold",
+            fontSize: "12px",
+            alignSelf: "center",
+          }}
+        >
+          Hoob Receipt
+        </Text>
+        <Text
+          style={{
+            marginTop: "10px",
+            fontFamily: "Roboto-Regular",
+            fontSize: "12px",
+            alignSelf: "flex-end",
+          }}
+        >
+          {`${receipt.date}, RNo: ${receipt.receiptNo}`}
+        </Text>
+        <Text
+          style={{
+            marginTop: "10px",
+            fontFamily: "Roboto-Bold",
+            fontSize: "16px",
+            alignSelf: "flex-start",
+            color: "#000080",
+          }}
+        >
+          {`ITS ID : ${HOFITS}`}
+        </Text>
+        <Text
+          style={{
+            marginTop: "10px",
+            fontFamily: "Roboto-Bold",
+            fontSize: "14px",
+            alignSelf: "flex-start",
+          }}
+        >
+          {`Name : ${HOFName}`}
+        </Text>
+        <Text
+          style={{
+            marginTop: "10px",
+            fontFamily: "Roboto-Regular",
+            fontSize: "12px",
+            alignSelf: "flex-start",
+          }}
+        >
+          {`Markaz : ${markaz} | Takhmeen Amount : ${receipt.amount}`}
+        </Text>
+        <Text
+          style={{
+            marginTop: "20px",
+            fontFamily: "Roboto-Regular",
+            fontSize: "14px",
+          }}
+        >
+          Received with Thanks your contribution of
+          <Text
+            style={{ fontFamily: "Roboto-Bold" }}
+          >{` Rs. ${receipt.amount}, SOME THOUSAND SOME HUNDRED`}</Text>
+          {` by ${receipt.mode}, towards Niyaz Hoob.`}
+        </Text>
+        <Text
+          style={{
+            marginTop: "15px",
+            fontFamily: "Roboto-Regular",
+            fontSize: "12px",
+            alignSelf: "flex-start",
+          }}
+        >
+          The purpose of this Hoob is to do Niyaz Jaman during Shere Ramadan
+          1444
+        </Text>
+        <Text
+          style={{
+            marginTop: "15px",
+            marginBottom: "20px",
+            fontFamily: "Roboto-Italic",
+            fontSize: "8px",
+            alignSelf: "flex-start",
+            color: "#BEBEBE",
+          }}
+        >
+          This is a computer generated receipt and does not require a signature
+        </Text>
       </View>
     </Page>
   </Document>
