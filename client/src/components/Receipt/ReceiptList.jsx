@@ -17,7 +17,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { GET_RECEIPTS } from "../../store/actionTypes";
 import { RECEIPT_LIST_HEADER } from "../../constants";
 import Header from "../Header";
-import { useCustomHook, VirtualizedTable } from "../common-components";
+import { StickyHeaderTable, useCustomHook } from "../common-components";
 import { receiptService } from "../../services/receiptService";
 import {
   downloadReceipts,
@@ -236,7 +236,7 @@ export default function FormList() {
           />
         </Search>
       </div>
-      <VirtualizedTable
+      <StickyHeaderTable
         rows={rows}
         Row={Row}
         RowDetails={RowDetails}
