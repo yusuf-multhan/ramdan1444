@@ -29,6 +29,10 @@ const HofDetailsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  PREVIOUS_TAKHMEEN: {
+    type: String,
+    required: false,
+  },
   isHOF: {
     type: Boolean,
     require: false,

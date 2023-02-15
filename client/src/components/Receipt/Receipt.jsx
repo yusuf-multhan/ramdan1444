@@ -175,6 +175,20 @@ const Receipt = (props) => {
                   disabled
                 />
               </Grid>
+              <Grid item xs={6} />
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  fullWidth
+                  size="small"
+                  id="HOFName"
+                  name="HOFName"
+                  label="HOF Name"
+                  type="text"
+                  value={takhmeenDetails.HOFName}
+                  disabled
+                />
+              </Grid>
               <Grid item xs={12}>
                 <FormLabel>Takhmeen summary</FormLabel>
                 {TakhmeenSummary({

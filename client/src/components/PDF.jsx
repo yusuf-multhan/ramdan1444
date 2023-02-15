@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#C4D5A7",
   },
   headerTextWrapper: {
     display: "flex",
@@ -64,7 +63,6 @@ const styles = StyleSheet.create({
   },
   headTextCommon: {
     alignSelf: "center",
-    color: "#3c4136",
     fontFamily: "Roboto-Bold",
     fontSize: "12px",
   },
@@ -74,6 +72,32 @@ const styles = StyleSheet.create({
   },
 });
 
+const getBgColorByMarkaz = (markaz) => {
+  switch (markaz) {
+    case "ZM":
+      return "#C4D5A7";
+    case "BH":
+      return "#FEC7C1";
+    case "JM":
+      return "#D4AF37";
+    default:
+      return "#C4D5A7";
+  }
+};
+
+const getTextColorByMarkaz = (markaz) => {
+  switch (markaz) {
+    case "ZM":
+      return "#3c4136";
+    case "BH":
+      return "#610C04";
+    case "JM":
+      return "#390500";
+    default:
+      return "#3c4136";
+  }
+};
+
 // Create Document Component
 const Passes = ({ familyMembers = [], HOFITS, formNo, markaz }) => (
   <Document width={"100%"}>
@@ -81,13 +105,29 @@ const Passes = ({ familyMembers = [], HOFITS, formNo, markaz }) => (
       {familyMembers.map((fm, i) => {
         return (
           <View key={fm.its} style={styles.passWrapper} break={i !== 0}>
-            <View style={styles.passHead}>
+            <View
+              style={{
+                ...styles.passHead,
+                backgroundColor: getBgColorByMarkaz(markaz),
+              }}
+            >
               <Image src={"/logo.png"} style={styles.logo} />
               <View style={styles.headerTextWrapper}>
-                <Text style={{ ...styles.headTextCommon, ...styles.headText }}>
+                <Text
+                  style={{
+                    ...styles.headTextCommon,
+                    ...styles.headText,
+                    color: getTextColorByMarkaz(markaz),
+                  }}
+                >
                   Anjuman-E-Fakhri Pune
                 </Text>
-                <Text style={styles.headTextCommon}>{`${
+                <Text
+                  style={{
+                    ...styles.headTextCommon,
+                    color: getTextColorByMarkaz(markaz),
+                  }}
+                >{`${
                   MARKAZ_CONST.find((i) => i.value === markaz)?.displayVal
                 } Shehrulla1444`}</Text>
               </View>
@@ -117,25 +157,30 @@ const Passes = ({ familyMembers = [], HOFITS, formNo, markaz }) => (
               >
                 <Text style={{ width: "20%" }}>ITS ID</Text>
                 <Text style={{ marginRight: "10px" }}>:</Text>
-                <Text
+                <View
                   style={{
-                    border: "2px solid black",
-                    padding: "3px 5px",
+                    width: "80%",
+                    flexDirection: "row",
                   }}
                 >
-                  {fm.its}
-                </Text>
+                  <Text
+                    style={{ border: "2px solid black", padding: "3px 5px" }}
+                  >
+                    {fm.its}
+                  </Text>
+                </View>
               </View>
               <View
                 style={{
                   paddingTop: "3px",
                   fontSize: "12px",
                   flexDirection: "row",
+                  overflow: "hidden",
                 }}
               >
                 <Text style={{ width: "20%" }}>Name</Text>
                 <Text style={{ marginRight: "10px" }}>:</Text>
-                <Text>{fm.name}</Text>
+                <Text style={{ width: "80%" }}>{fm.name}</Text>
               </View>
               <View
                 style={{
@@ -146,7 +191,7 @@ const Passes = ({ familyMembers = [], HOFITS, formNo, markaz }) => (
               >
                 <Text style={{ width: "20%" }}>Gender</Text>
                 <Text style={{ marginRight: "10px" }}>:</Text>
-                <Text>{fm.gender}</Text>
+                <Text style={{ width: "80%" }}>{fm.gender}</Text>
               </View>
               <View
                 style={{
@@ -157,7 +202,7 @@ const Passes = ({ familyMembers = [], HOFITS, formNo, markaz }) => (
               >
                 <Text style={{ width: "20%" }}>Age</Text>
                 <Text style={{ marginRight: "10px" }}>:</Text>
-                <Text>{fm.age}</Text>
+                <Text style={{ width: "80%" }}>{fm.age}</Text>
               </View>
               <Text
                 style={{
@@ -258,8 +303,8 @@ const ReceiptsPDF = ({
         <Text
           style={{
             marginTop: "10px",
-            fontFamily: "Roboto-Regular",
-            fontSize: "12px",
+            fontFamily: "Roboto-Bold",
+            fontSize: "13px",
             alignSelf: "flex-start",
           }}
         >
@@ -275,8 +320,8 @@ const ReceiptsPDF = ({
           Received with Thanks your contribution of
           <Text style={{ fontFamily: "Roboto-Bold" }}>{` Rs. ${
             receipt.amount
-          }, ${toWords.convert(receipt.amount)}`}</Text>
-          {` by ${receipt.mode}, towards Niyaz Hoob.`}
+          } (${toWords.convert(receipt.amount)} by ${receipt.mode})`}</Text>
+          {` towards Niyaz Hoob.`}
         </Text>
         <Text
           style={{

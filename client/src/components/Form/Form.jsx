@@ -44,6 +44,7 @@ const MaterialFormComponent = (props) => {
     markaz: "ZM",
     HOFId: "",
     HOFName: "",
+    previousYearTakhmeeen: "",
     HOFAddress: "",
     HOFPhone: "",
     familyMembers: [],
@@ -78,6 +79,7 @@ const MaterialFormComponent = (props) => {
     niyaaz,
     chairs,
     comments,
+    previousYearTakhmeeen,
   } = getValues();
   const handleSubmit = async () => {
     const vals = getValues();
@@ -150,10 +152,11 @@ const MaterialFormComponent = (props) => {
         if (e.target.value !== HOFDetails.HOF_ID) {
           setValue("HOFId", HOFDetails.HOF_ID);
         }
+        setValue("previousYearTakhmeeen", HOFDetails.PREVIOUS_TAKHMEEN);
         reRender(!render);
       } else {
         addToastMsg("HOF and its members details not found", "error");
-        reset({...initialValues, HOFId: e.target.value});
+        reset({ ...initialValues, HOFId: e.target.value });
       }
     } catch (e) {
       console.error("unexpected error", e);
@@ -279,6 +282,19 @@ const MaterialFormComponent = (props) => {
                     reRender(!render);
                   }}
                   error={errors.HOFName ? true : false}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  fullWidth
+                  size="small"
+                  id="previousYearTakhmeeen"
+                  name="previousYearTakhmeeen"
+                  label="Previous year takhmeen"
+                  type="text"
+                  value={previousYearTakhmeeen}
+                  disabled
                 />
               </Grid>
               <Grid item xs={12}>
