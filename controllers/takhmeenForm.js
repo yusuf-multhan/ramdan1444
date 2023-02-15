@@ -44,7 +44,7 @@ exports.getByHOF = async (req, res) => {
 // get takhmeen for by form no
 exports.getByFormNo = async (req, res) => {
   try {
-    const formNo = req.params.formno;
+    const formNo = req.params.formno?.toUpperCase();
     const form = await TakhmeenForm.findOne({ formNo: formNo });
     res.status(200).json({
       success: true,
