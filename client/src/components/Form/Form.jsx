@@ -55,7 +55,6 @@ const MaterialFormComponent = (props) => {
     comments: "",
   };
   const {
-    register,
     handleSubmit: submitIt,
     reset,
     setValue,
@@ -165,9 +164,9 @@ const MaterialFormComponent = (props) => {
 
   const checkIfFormExists = (data) => {
     const vals = getValues();
-    const exists = data.find(d => d.markaz === vals.markaz);
+    const exists = data.find((d) => d.markaz === vals.markaz);
     return exists ? true : false;
-  }
+  };
 
   // I know its dirty, but got no other way to re render when delete member
   const [render, reRender] = useState(false);
@@ -226,7 +225,7 @@ const MaterialFormComponent = (props) => {
                       defaultValue={"ZM"}
                       value={markaz}
                       onChange={(e) => {
-                        reset({...initialValues, markaz: e.target.value});
+                        reset({ ...initialValues, markaz: e.target.value });
                         reRender(!render);
                       }}
                     >
@@ -322,7 +321,7 @@ const MaterialFormComponent = (props) => {
                   familyMembers,
                   handleDeleteMember: (its) => {
                     const newFms = JSON.parse(JSON.stringify(familyMembers));
-                    const index = newFms.findIndex(fm => fm.its === its); 
+                    const index = newFms.findIndex((fm) => fm.its === its);
                     index > -1 && newFms.splice(index, 1);
                     setValue("familyMembers", newFms);
                     reRender(!render);
