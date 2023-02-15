@@ -79,9 +79,9 @@ const VirtualizedTable = (parentProps) => {
 
 const StickyHeaderTable = (parentProps) => {
   return (
-    <Paper style={{ height: 650, width: "100%" }}>
-      <TableContainer>
-        <Table>
+    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <TableContainer sx={{ maxHeight: 650 }}>
+        <Table stickyHeader>
           <TableHead>
             <parentProps.FixedHeaderContent
               order={parentProps.order}

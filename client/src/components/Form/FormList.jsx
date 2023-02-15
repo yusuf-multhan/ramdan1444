@@ -29,8 +29,8 @@ import {
   downLoadPasses,
   filterRows,
   getGrandTotal,
+  StickyHeaderTable,
   useCustomHook,
-  VirtualizedTable,
 } from "../common-components";
 import {
   Checkbox,
@@ -391,7 +391,7 @@ export default function FormList() {
         </IconButton>
       </div>
       {
-        <VirtualizedTable
+        <StickyHeaderTable
           rows={rows}
           Row={Row}
           RowDetails={RowDetails}

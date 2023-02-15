@@ -8,6 +8,7 @@ import {
   Image,
   Font,
 } from "@react-pdf/renderer";
+import { ToWords } from "to-words";
 import { MARKAZ_CONST } from "../constants";
 
 // Register font
@@ -32,6 +33,7 @@ Font.register({
   src: robotoThin,
 });
 
+const toWords = new ToWords();
 // Create styles
 const styles = StyleSheet.create({
   page: {
@@ -271,9 +273,9 @@ const ReceiptsPDF = ({
           }}
         >
           Received with Thanks your contribution of
-          <Text
-            style={{ fontFamily: "Roboto-Bold" }}
-          >{` Rs. ${receipt.amount}, SOME THOUSAND SOME HUNDRED`}</Text>
+          <Text style={{ fontFamily: "Roboto-Bold" }}>{` Rs. ${
+            receipt.amount
+          }, ${toWords.convert(receipt.amount)}`}</Text>
           {` by ${receipt.mode}, towards Niyaz Hoob.`}
         </Text>
         <Text

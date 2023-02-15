@@ -24,7 +24,8 @@
     "react-router-dom": "^6.8.0",
     "react-scripts": "^5.0.1",
     "react-virtuoso": "^4.1.0",
-    "sass": "^1.58.0"
+    "sass": "^1.58.0",
+    "to-words": "^3.4.0"
   },
   "proxy": "http://localhost:4000",
   "scripts": {
