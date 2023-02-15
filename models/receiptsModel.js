@@ -9,6 +9,10 @@ const ReceiptsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  markaz: {
+    type: String,
+    required: false,
+  },
   HOFId: {
     type: String,
     required: true,

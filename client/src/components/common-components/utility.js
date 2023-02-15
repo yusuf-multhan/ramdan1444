@@ -1,5 +1,10 @@
 import ReactPDF from "@react-pdf/renderer";
-import { CHAIRS_UNIT, PAYMENT_MODE_CONST, ZABIHAT_UNIT } from "../../constants";
+import {
+  CHAIRS_UNIT,
+  MARKAZ_CONST,
+  PAYMENT_MODE_CONST,
+  ZABIHAT_UNIT,
+} from "../../constants";
 import { Passes, ReceiptsPDF } from "../PDF";
 
 export const getGrandTotal = (takhmeenDetails) => {
@@ -45,6 +50,9 @@ export const sortReceiptsByHOF = (receipts = []) => {
           HOFId: item.HOFId,
           HOFName: item.HOFName,
           formNo: item.formNo,
+          markaz:
+            MARKAZ_CONST.find((i) => i.value === item.markaz)?.displayVal ??
+            "Markaz Unavailable",
           subReceipts: [getReceiptDetails(item)],
         };
       }
@@ -84,6 +92,7 @@ export const downloadReceipts = async (props) => {
       HOFITS={row.HOFId}
       HOFName={row.HOFName}
       formNo={row.formNo}
+      markaz={row.markaz}
     />
   ).toBlob();
   downloadPDF(blob, `${receipt.receiptNo}`);

@@ -51,6 +51,7 @@ const Receipt = (props) => {
     takhmeenDetailsInitVal
   );
   const initialValues = {
+    formNo: "",
     HOFId: "",
     date: "",
     amount: null,
@@ -68,8 +69,8 @@ const Receipt = (props) => {
   } = useForm({
     defaultValues: initialValues,
   });
-  watch("HOFId");
-  const { HOFId, mode } = getValues();
+  watch("HOFId", "formNo");
+  const { HOFId, mode, formNo } = getValues();
   const handleSubmit = async () => {
     const vals = getValues();
     startLoading();
@@ -79,6 +80,7 @@ const Receipt = (props) => {
         date: paymentDate,
         formNo: takhmeenDetails.formNo,
         HOFName: takhmeenDetails.HOFName,
+        markaz: takhmeenDetails.markaz,
       });
       if (isOK) {
         addToastMsg("Receipt saved : " + data.receiptNo, "success");
@@ -104,17 +106,19 @@ const Receipt = (props) => {
     if (!e.target.value) return;
     startLoading();
     try {
-      const { data } = await formService.isFormExistByHOF(e.target.value);
-      if (!data.exists) {
+      const { data } = await formService.getFormbyFormNo(e.target.value);
+      if (!data.formNo) {
         addToastMsg(
           "Data not registered, please fill registration form first",
           "error"
         );
       } else {
+        setValue("HOFId", data.HOFId);
         setTakhmeenDetails({
-          ...calculateTakhmeenDetails(data.form),
-          formNo: data.form.formNo,
-          HOFName: data.form.HOFName,
+          ...calculateTakhmeenDetails(data),
+          formNo: data.formNo,
+          HOFName: data.HOFName,
+          markaz: data.markaz,
         });
       }
     } catch (e) {
@@ -143,22 +147,34 @@ const Receipt = (props) => {
                   required
                   fullWidth
                   size="small"
-                  id="HOFId"
-                  name="HOFId"
-                  label="HOF Id"
+                  id="formNo"
+                  name="formNo"
+                  label="Form No"
                   type="text"
-                  value={HOFId}
+                  value={formNo}
                   onChange={(e) => {
-                    setValue("HOFId", e.currentTarget?.value ?? "");
+                    setValue("formNo", e.currentTarget?.value ?? "");
                     reRender(!render);
                   }}
                   onBlur={(e) => {
                     getFormData(e);
                   }}
-                  error={errors.HOFId ? true : false}
+                  error={errors.formNo ? true : false}
                 />
               </Grid>
-              <Grid item xs={12} />
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  fullWidth
+                  size="small"
+                  id="HOFId"
+                  name="HOFId"
+                  label="HOF Id"
+                  type="text"
+                  value={HOFId}
+                  disabled
+                />
+              </Grid>
               <Grid item xs={12}>
                 <FormLabel>Takhmeen summary</FormLabel>
                 {TakhmeenSummary({
