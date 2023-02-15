@@ -153,7 +153,7 @@ const MaterialFormComponent = (props) => {
         reRender(!render);
       } else {
         addToastMsg("HOF and its members details not found", "error");
-        reset();
+        reset({...initialValues, HOFId: e.target.value});
       }
     } catch (e) {
       console.error("unexpected error", e);
