@@ -226,8 +226,7 @@ const ReceiptsPDF = ({
   HOFITS,
   HOFName,
   formNo,
-  markaz = "",
-  total,
+  markaz = "Burhani Hall",
 }) => (
   <Document>
     <Page size="A4" style={styles.page}>
@@ -309,7 +308,7 @@ const ReceiptsPDF = ({
             alignSelf: "flex-start",
           }}
         >
-          {`Markaz : ${markaz} | Takhmeen Amount : ${total}`}
+          {`Markaz : ${markaz} | Takhmeen Amount : ${receipt.amount}`}
         </Text>
         <Text
           style={{

@@ -33,13 +33,9 @@ const ReceiptsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  total: {
-    type: Number,
-    required: true,
-  },
   details: {
     type: String,
-    required: false,
+    required: true,
   },
 });
 
