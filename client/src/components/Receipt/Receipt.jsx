@@ -37,6 +37,7 @@ const Receipt = (props) => {
     chairs: 0,
     paidAmount: 0,
     pendingAmount: 0,
+    grandTotal: 0,
     formNo: "",
     HOFName: "",
   };
@@ -81,6 +82,7 @@ const Receipt = (props) => {
         formNo: takhmeenDetails.formNo,
         HOFName: takhmeenDetails.HOFName,
         markaz: takhmeenDetails.markaz,
+        total: takhmeenDetails.grandTotal,
       });
       if (isOK) {
         addToastMsg("Receipt saved : " + data.receiptNo, "success");
@@ -279,7 +281,6 @@ const Receipt = (props) => {
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  required
                   fullWidth
                   size="small"
                   id="details"

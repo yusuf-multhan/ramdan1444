@@ -27,6 +27,7 @@ export const calculateTakhmeenDetails = (td) => {
     chairs: td.chairs,
     paidAmount: td.paidAmount,
     pendingAmount: grandTotal - td.paidAmount,
+    grandTotal,
   };
 };
 
@@ -54,6 +55,7 @@ export const sortReceiptsByHOF = (receipts = []) => {
             MARKAZ_CONST.find((i) => i.value === item.markaz)?.displayVal ??
             "Markaz Unavailable",
           subReceipts: [getReceiptDetails(item)],
+          total: item.total,
         };
       }
       return acc;
@@ -93,6 +95,7 @@ export const downloadReceipts = async (props) => {
       HOFName={row.HOFName}
       formNo={row.formNo}
       markaz={row.markaz}
+      total={row.total}
     />
   ).toBlob();
   downloadPDF(blob, `${receipt.receiptNo}`);
