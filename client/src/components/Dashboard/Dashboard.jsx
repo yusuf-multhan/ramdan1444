@@ -166,6 +166,80 @@ const Dashboard = () => {
               </TableContainer>
             </Paper>
           </Grid>
+          <Grid item xs={12}>
+            <Paper>
+              <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell />
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        # of Forms
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        # of Mumineen
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        # of Males
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        # of Females
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        # of Children
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {MARKAZ_CONST.map((item) => {
+                      return (
+                        <TableRow key={item.value}>
+                          <TableCell sx={{ fontWeight: "bold" }}>
+                            {item.displayVal}
+                          </TableCell>
+                          <TableCell align="right">
+                            {dashboardMetric[item.value]?.forms ?? 0}
+                          </TableCell>
+                          <TableCell align="right">
+                            {dashboardMetric[item.value]?.totalMembers ?? 0}
+                          </TableCell>
+                          <TableCell align="right">
+                            {dashboardMetric[item.value]?.males ?? 0}
+                          </TableCell>
+                          <TableCell align="right">
+                            {dashboardMetric[item.value]?.females ?? 0}
+                          </TableCell>
+                          <TableCell align="right">
+                            {dashboardMetric[item.value]?.children ?? 0}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                    <TableRow key={"tptal"}>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        {"Grand Total"}
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                        {dashboardMetric.total.forms}
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                        {dashboardMetric.total.totalMembers}
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                        {dashboardMetric.total.males}
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                        {dashboardMetric.total.females}
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontWeight: "bold" }}>
+                        {dashboardMetric.total.children}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Paper>
+          </Grid>
         </Grid>
       ) : null}
     </>

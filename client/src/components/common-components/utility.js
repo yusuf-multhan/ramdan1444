@@ -149,6 +149,14 @@ export const filterRows = (rows = [], filters) => {
   return filteredRows;
 };
 
+const getCountByGender = (fms = [], gender) => {
+  return fms.filter((i) => i.gender?.toLowerCase() === gender).length;
+};
+
+const getChildrenCount = (fms = []) => {
+  return fms.filter((i) => i.age < 5).length;
+};
+
 export const getDashboardMetric = (forms = []) => {
   return forms.reduce(
     (acc, item) => {
@@ -161,6 +169,11 @@ export const getDashboardMetric = (forms = []) => {
       acc.total.grandTotal += grandTotal;
       acc.total.paidAmount += Number(item.paidAmount);
       acc.total.pendingAmount += grandTotal - Number(item.paidAmount);
+      acc.total.forms += 1;
+      acc.total.totalMembers += item.familyMembers.length;
+      acc.total.males += getCountByGender(item.familyMembers, "male");
+      acc.total.females += getCountByGender(item.familyMembers, "female");
+      acc.total.children += getChildrenCount(item.familyMembers);
       if (acc[item.markaz]) {
         acc[item.markaz].takhmeenAmount += Number(item.takhmeenAmount);
         acc[item.markaz].zabihat += Number(item.zabihat);
@@ -170,6 +183,14 @@ export const getDashboardMetric = (forms = []) => {
         acc[item.markaz].grandTotal += grandTotal;
         acc[item.markaz].paidAmount += Number(item.paidAmount);
         acc[item.markaz].pendingAmount += grandTotal - Number(item.paidAmount);
+        acc[item.markaz].forms += 1;
+        acc[item.markaz].totalMembers += item.familyMembers.length;
+        acc[item.markaz].males += getCountByGender(item.familyMembers, "male");
+        acc[item.markaz].females += getCountByGender(
+          item.familyMembers,
+          "female"
+        );
+        acc[item.markaz].children += getChildrenCount(item.familyMembers);
       } else {
         acc[item.markaz] = {
           takhmeenAmount: Number(item.takhmeenAmount),
@@ -180,6 +201,11 @@ export const getDashboardMetric = (forms = []) => {
           grandTotal: grandTotal,
           paidAmount: Number(item.paidAmount),
           pendingAmount: grandTotal - Number(item.paidAmount),
+          forms: 1,
+          totalMembers: item.familyMembers.length,
+          males: getCountByGender(item.familyMembers, "male"),
+          females: getCountByGender(item.familyMembers, "female"),
+          children: getChildrenCount(item.familyMembers),
         };
       }
       return acc;
@@ -194,6 +220,11 @@ export const getDashboardMetric = (forms = []) => {
         grandTotal: 0,
         pendingAmount: 0,
         paidAmount: 0,
+        forms: 0,
+        totalMembers: 0,
+        males: 0,
+        females: 0,
+        children: 0,
       },
     }
   );
