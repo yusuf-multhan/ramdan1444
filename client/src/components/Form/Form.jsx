@@ -51,7 +51,6 @@ const MaterialFormComponent = (props) => {
     takhmeenAmount: 0,
     zabihat: 0,
     iftaari: 0,
-    niyaaz: 0,
     chairs: 0,
     comments: "",
   };
@@ -76,7 +75,6 @@ const MaterialFormComponent = (props) => {
     takhmeenAmount,
     zabihat,
     iftaari,
-    niyaaz,
     chairs,
     comments,
     previousYearTakhmeeen,
@@ -361,7 +359,7 @@ const MaterialFormComponent = (props) => {
                   size="small"
                   id="takhmeenAmount"
                   name="takhmeenAmount"
-                  label="Takhmeen amount"
+                  label="Niyaaz takhmeen amount"
                   type="number"
                   value={takhmeenAmount}
                   onChange={(e) => {
@@ -398,22 +396,6 @@ const MaterialFormComponent = (props) => {
                   value={iftaari}
                   onChange={(e) => {
                     setValue("iftaari", e.currentTarget?.value ?? "");
-                    reRender(!render);
-                  }}
-                  error={errors.HOFPhone ? true : false}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  id="niyaaz"
-                  name="niyaaz"
-                  label="Niyaaz"
-                  type="number"
-                  value={niyaaz}
-                  onChange={(e) => {
-                    setValue("niyaaz", e.currentTarget?.value ?? "");
                     reRender(!render);
                   }}
                   error={errors.HOFPhone ? true : false}

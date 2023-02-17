@@ -8,7 +8,7 @@ const BarChart = ({ dashboardMetric }) => {
   const xaxisCategories = MARKAZ_CONST.map((item) => item.displayVal);
   const series = [
     {
-      name: "Takhmeen amount",
+      name: "Niyaaz takhmeen amount",
       //   color: "#FFD700",
       data: [
         ZM.takhmeenAmount ?? 0,
@@ -24,11 +24,6 @@ const BarChart = ({ dashboardMetric }) => {
         Number(BH.zabihat ?? 0) * ZABIHAT_UNIT,
         Number(JM.zabihat ?? 0) * ZABIHAT_UNIT,
       ],
-    },
-    {
-      name: "Niyaaz",
-      //   color: "#8B5E3C",
-      data: [ZM.niyaaz ?? 0, BH.niyaaz ?? 0, JM.niyaaz ?? 0],
     },
     {
       name: "Iftaari",
