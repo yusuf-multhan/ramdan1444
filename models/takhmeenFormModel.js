@@ -42,11 +42,6 @@ const TakhmeenFormSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  niyaaz: {
-    type: Number,
-    default: 0,
-    required: false,
-  },
   chairs: {
     type: Number,
     required: false,
