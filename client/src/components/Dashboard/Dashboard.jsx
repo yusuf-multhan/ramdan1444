@@ -70,13 +70,10 @@ const Dashboard = () => {
                     <TableRow>
                       <TableCell />
                       <TableCell sx={{ fontWeight: "bold" }} align="right">
-                        Takhmeen
+                        Niyaaz takhmeen
                       </TableCell>
                       <TableCell sx={{ fontWeight: "bold" }} align="right">
                         Zabihat
-                      </TableCell>
-                      <TableCell sx={{ fontWeight: "bold" }} align="right">
-                        Niyaaz
                       </TableCell>
                       <TableCell sx={{ fontWeight: "bold" }} align="right">
                         Iftaari
@@ -110,9 +107,6 @@ const Dashboard = () => {
                               : 0}
                           </TableCell>
                           <TableCell align="right">
-                            {dashboardMetric[item.value]?.niyaaz ?? 0}
-                          </TableCell>
-                          <TableCell align="right">
                             {dashboardMetric[item.value]?.iftaari ?? 0}
                           </TableCell>
                           <TableCell align="right">
@@ -142,9 +136,6 @@ const Dashboard = () => {
                         {dashboardMetric["total"].zabihat
                           ? `${dashboardMetric["total"].zabihat} x ${ZABIHAT_UNIT}`
                           : 0}
-                      </TableCell>
-                      <TableCell sx={{ fontWeight: "bold" }} align="right">
-                        {dashboardMetric["total"].niyaaz}
                       </TableCell>
                       <TableCell sx={{ fontWeight: "bold" }} align="right">
                         {dashboardMetric["total"].iftaari}

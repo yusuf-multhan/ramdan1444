@@ -26,9 +26,6 @@ const TakhmeenSummary = ({ takhmeenDetails }) => {
               Iftaari
             </TableCell>
             <TableCell align="right" style={{ fontWeight: "bold" }}>
-              Niyaaz
-            </TableCell>
-            <TableCell align="right" style={{ fontWeight: "bold" }}>
               Chair
             </TableCell>
             <TableCell align="right" style={{ fontWeight: "bold" }}>
@@ -49,9 +46,6 @@ const TakhmeenSummary = ({ takhmeenDetails }) => {
             <TableCell align="right">
               {Number(takhmeenDetails.iftaari)}
             </TableCell>
-            <TableCell align="right">
-              {Number(takhmeenDetails.niyaaz)}
-            </TableCell>
             <TableCell align="right">{`${
               takhmeenDetails.chairs
                 ? "" + takhmeenDetails.chairs + " x " + CHAIRS_UNIT
@@ -61,7 +55,6 @@ const TakhmeenSummary = ({ takhmeenDetails }) => {
               {Number(takhmeenDetails.takhmeenAmount) +
                 Number(takhmeenDetails.zabihat * ZABIHAT_UNIT) +
                 Number(takhmeenDetails.iftaari) +
-                Number(takhmeenDetails.niyaaz) +
                 Number(takhmeenDetails.chairs) * CHAIRS_UNIT}
             </TableCell>
           </TableRow>

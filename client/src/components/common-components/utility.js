@@ -12,7 +12,6 @@ export const getGrandTotal = (takhmeenDetails) => {
     Number(takhmeenDetails.takhmeenAmount) +
     Number(takhmeenDetails.zabihat * ZABIHAT_UNIT) +
     Number(takhmeenDetails.iftaari) +
-    Number(takhmeenDetails.niyaaz) +
     Number(takhmeenDetails.chairs) * CHAIRS_UNIT
   );
 };
@@ -23,10 +22,10 @@ export const calculateTakhmeenDetails = (td) => {
     takhmeenAmount: td.takhmeenAmount,
     zabihat: td.zabihat,
     iftaari: td.iftaari,
-    niyaaz: td.niyaaz,
     chairs: td.chairs,
     paidAmount: td.paidAmount,
     pendingAmount: grandTotal - td.paidAmount,
+    grandTotal,
   };
 };
 
@@ -54,6 +53,7 @@ export const sortReceiptsByHOF = (receipts = []) => {
             MARKAZ_CONST.find((i) => i.value === item.markaz)?.displayVal ??
             "Markaz Unavailable",
           subReceipts: [getReceiptDetails(item)],
+          total: item.total,
         };
       }
       return acc;
@@ -93,6 +93,7 @@ export const downloadReceipts = async (props) => {
       HOFName={row.HOFName}
       formNo={row.formNo}
       markaz={row.markaz}
+      total={row.total}
     />
   ).toBlob();
   downloadPDF(blob, `${receipt.receiptNo}`);
@@ -163,7 +164,6 @@ export const getDashboardMetric = (forms = []) => {
       const grandTotal = getGrandTotal(item);
       acc.total.takhmeenAmount += Number(item.takhmeenAmount);
       acc.total.zabihat += Number(item.zabihat);
-      acc.total.niyaaz += Number(item.niyaaz);
       acc.total.iftaari += Number(item.iftaari);
       acc.total.chairs += Number(item.chairs);
       acc.total.grandTotal += grandTotal;
@@ -177,7 +177,6 @@ export const getDashboardMetric = (forms = []) => {
       if (acc[item.markaz]) {
         acc[item.markaz].takhmeenAmount += Number(item.takhmeenAmount);
         acc[item.markaz].zabihat += Number(item.zabihat);
-        acc[item.markaz].niyaaz += Number(item.niyaaz);
         acc[item.markaz].iftaari += Number(item.iftaari);
         acc[item.markaz].chairs += Number(item.chairs);
         acc[item.markaz].grandTotal += grandTotal;
@@ -195,7 +194,6 @@ export const getDashboardMetric = (forms = []) => {
         acc[item.markaz] = {
           takhmeenAmount: Number(item.takhmeenAmount),
           zabihat: Number(item.zabihat),
-          niyaaz: Number(item.niyaaz),
           iftaari: Number(item.iftaari),
           chairs: Number(item.chairs),
           grandTotal: grandTotal,
@@ -214,7 +212,6 @@ export const getDashboardMetric = (forms = []) => {
       total: {
         takhmeenAmount: 0,
         zabihat: 0,
-        niyaaz: 0,
         iftaari: 0,
         chairs: 0,
         grandTotal: 0,

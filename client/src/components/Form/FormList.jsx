@@ -83,7 +83,6 @@ const createData = (form) => {
     grandTotal,
     pendingAmount: grandTotal - form.paidAmount,
     takhmeenDetails: {
-      niyaaz: form.niyaaz,
       iftaari: form.iftaari,
       zabihat: form.zabihat,
       takhmeenAmount: form.takhmeenAmount,
@@ -177,10 +176,9 @@ const RowDetails = (row) => {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="right">Takhmeen Amount</TableCell>
+                    <TableCell align="right">Niyaaz takhmeen Amount</TableCell>
                     <TableCell align="right">Zabihat</TableCell>
                     <TableCell align="right">Iftaari</TableCell>
-                    <TableCell align="right">Niyaaz</TableCell>
                     <TableCell align="right">Chairs</TableCell>
                     <TableCell align="right" style={{ fontWeight: "bold" }}>
                       Grand Total
@@ -197,9 +195,6 @@ const RowDetails = (row) => {
                     </TableCell>
                     <TableCell align="right">
                       {row.takhmeenDetails.iftaari}
-                    </TableCell>
-                    <TableCell align="right">
-                      {row.takhmeenDetails.niyaaz}
                     </TableCell>
                     <TableCell align="right">
                       {`${row.takhmeenDetails.chairs} x ${CHAIRS_UNIT}`}
