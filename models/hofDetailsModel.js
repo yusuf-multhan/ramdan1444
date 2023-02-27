@@ -29,6 +29,10 @@ const HofDetailsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  HOF_ADDRESS: {
+    type: String,
+    required: true,
+  },
   PREVIOUS_TAKHMEEN: {
     type: String,
     required: false,

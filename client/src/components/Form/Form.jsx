@@ -147,6 +147,7 @@ const MaterialFormComponent = (props) => {
           shouldDirty: true,
         });
         setValue("HOFPhone", HOFDetails.HOF_PHONE, { shouldDirty: true });
+        setValue("HOFAddress", HOFDetails.HOF_ADDRESS);
         if (e.target.value !== HOFDetails.HOF_ID) {
           setValue("HOFId", HOFDetails.HOF_ID);
         }
