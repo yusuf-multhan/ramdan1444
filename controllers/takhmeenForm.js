@@ -97,8 +97,8 @@ exports.add = async (req, res) => {
 // @route  PUT /api/v1/takhmeenform
 exports.update = async (req, res) => {
   try {
-    const { HOFId } = req.body;
-    const updatedForm = await this.updateTakhmeenForm(HOFId, req.body);
+    const { formNo } = req.body;
+    const updatedForm = await this.updateTakhmeenForm(formNo, req.body);
     res.status(200).json(updatedForm);
   } catch (error) {
     console.log("API error", error);
@@ -111,10 +111,10 @@ exports.update = async (req, res) => {
   }
 };
 
-exports.updateTakhmeenForm = async (HOFId, data, isAmountUpdate = false) => {
+exports.updateTakhmeenForm = async (formNo, data, isAmountUpdate = false) => {
   try {
     const form = await TakhmeenForm.findOneAndUpdate(
-      { HOFId },
+      { formNo },
       isAmountUpdate
         ? {
             $inc: {

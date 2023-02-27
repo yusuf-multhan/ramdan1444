@@ -55,8 +55,8 @@ exports.add = async (req, res) => {
       ...req.body,
       receiptNo: `1444H/${counterSeq.seq}`,
     });
-    const { HOFId, amount } = req.body;
-    await updateTakhmeenForm(HOFId, { paidAmount: amount }, true);
+    const { formNo, amount } = req.body;
+    await updateTakhmeenForm(formNo, { paidAmount: amount }, true);
     res.status(201).json({
       success: true,
       data: receipt,

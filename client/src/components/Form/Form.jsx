@@ -221,6 +221,7 @@ const MaterialFormComponent = (props) => {
                   <FormLabel>Select markaz</FormLabel>
                   <FormControl label="Select markaz" fullWidth>
                     <Select
+                      disabled={props.isEdit}
                       fullWidth
                       size="small"
                       name="markaz"
