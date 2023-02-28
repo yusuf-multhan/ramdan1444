@@ -39,13 +39,14 @@ const getReceiptDetails = (item) => {
   };
 };
 
+// Todo: Refactor method name
 export const sortReceiptsByHOF = (receipts = []) => {
   return Object.values(
     receipts.reduce((acc, item) => {
-      if (acc[item.HOFId]?.HOFId) {
-        acc[item.HOFId].subReceipts.push(getReceiptDetails(item));
+      if (acc[item.formNo]?.formNo) {
+        acc[item.formNo].subReceipts.push(getReceiptDetails(item));
       } else {
-        acc[item.HOFId] = {
+        acc[item.formNo] = {
           HOFId: item.HOFId,
           HOFName: item.HOFName,
           formNo: item.formNo,
