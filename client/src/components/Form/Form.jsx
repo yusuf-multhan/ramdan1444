@@ -41,6 +41,7 @@ const MaterialFormComponent = (props) => {
   const navigate = useNavigate();
   const { startLoading, endLoading, addToastMsg } = useCustomHook();
   const initialValues = {
+    formNo: "",
     markaz: "ZM",
     HOFId: "",
     HOFName: "",
@@ -53,6 +54,7 @@ const MaterialFormComponent = (props) => {
     iftaari: 0,
     chairs: 0,
     comments: "",
+    submitter: "",
   };
   const {
     handleSubmit: submitIt,
@@ -78,9 +80,10 @@ const MaterialFormComponent = (props) => {
     chairs,
     comments,
     previousYearTakhmeeen,
+    submitter,
   } = getValues();
   const handleSubmit = async () => {
-    const vals = getValues();
+    const { formNo, ...vals } = getValues();
     if (!vals.familyMembers?.length) {
       return addToastMsg("Add atleast one member", "warning");
     }
@@ -95,7 +98,7 @@ const MaterialFormComponent = (props) => {
           throw new Error("Internal server error");
         }
       } else {
-        const { data, isOK } = await formService.addToForms(getValues());
+        const { data, isOK } = await formService.addToForms(vals);
         if (isOK) {
           addToastMsg("Details saved : " + data.formNo, "success");
           reset();
@@ -424,6 +427,22 @@ const MaterialFormComponent = (props) => {
                 {TakhmeenSummary({
                   takhmeenDetails: { ...getValues() },
                 })}
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  fullWidth
+                  size="small"
+                  id="submitter"
+                  name="submitter"
+                  label="Submitter"
+                  type="text"
+                  value={submitter}
+                  onChange={(e) => {
+                    setValue("submitter", e.currentTarget?.value ?? "");
+                    reRender(!render);
+                  }}
+                />
               </Grid>
               <Grid item xs={12}>
                 <TextField

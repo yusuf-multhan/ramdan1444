@@ -54,6 +54,10 @@ const TakhmeenFormSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  submitter: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("1444forms", TakhmeenFormSchema);
