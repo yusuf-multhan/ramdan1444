@@ -228,7 +228,6 @@ const MaterialFormComponent = (props) => {
                       fullWidth
                       size="small"
                       name="markaz"
-                      defaultValue={"ZM"}
                       value={markaz}
                       onChange={(e) => {
                         reset({ ...initialValues, markaz: e.target.value });
