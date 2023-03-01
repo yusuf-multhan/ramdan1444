@@ -1,5 +1,6 @@
 import {
   Grid,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import DownloadIcon from "@mui/icons-material/Download";
 import React from "react";
 import {
   CHAIRS_UNIT,
@@ -19,6 +21,7 @@ import { formService } from "../../services/formService";
 import { receiptService } from "../../services/receiptService";
 import { GET_FORMS, GET_RECEIPTS } from "../../store/actionTypes";
 import {
+  downloadReceipts2Xls,
   getDashboardMetric,
   getReceiptMetric,
   useCustomHook,
@@ -109,6 +112,15 @@ const Dashboard = () => {
                       </TableCell>
                       <TableCell sx={{ fontWeight: "bold" }} align="right">
                         Total Collection
+                        <IconButton
+                          size="small"
+                          color="secondary"
+                          onClick={() => {
+                            downloadReceipts2Xls(state.receipts);
+                          }}
+                        >
+                          <DownloadIcon />
+                        </IconButton>
                       </TableCell>
                     </TableRow>
                   </TableHead>

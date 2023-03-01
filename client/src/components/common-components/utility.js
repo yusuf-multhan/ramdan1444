@@ -1,4 +1,6 @@
 import ReactPDF from "@react-pdf/renderer";
+import XLSX from "sheetjs-style";
+import * as FileSaver from "file-saver";
 import {
   CHAIRS_UNIT,
   GrandTotal,
@@ -100,6 +102,53 @@ export const downloadReceipts = async (props) => {
     />
   ).toBlob();
   downloadPDF(blob, `${receipt.receiptNo}`);
+};
+
+const downloadXLSX = (workbook, filename) => {
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const xlsxbook = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+  const data = new Blob([xlsxbook], { type: fileType });
+  FileSaver.saveAs(data, filename);
+};
+
+export const downloadReceipts2Xls = (receipts = []) => {
+  if (!receipts.length) return;
+  const receiptsObj = receipts.reduce((acc, receiptFull) => {
+    const { _id, __v, ...receipt } = receiptFull;
+    const thisDate = new Date(receipt.date);
+    const dateStr =
+      thisDate.getDate() +
+      "-" +
+      getMonthName(thisDate.getMonth()) +
+      "-" +
+      thisDate.getFullYear();
+    if (acc[dateStr]) {
+      acc[dateStr].push({ ...receipt, date: dateStr });
+    } else {
+      acc[dateStr] = [{ ...receipt, date: dateStr }];
+    }
+    return acc;
+  }, {});
+  const wb = XLSX.utils.book_new();
+  Object.keys(receiptsObj).map((item, index) => {
+    const ws = XLSX.utils.json_to_sheet(receiptsObj[item]);
+    XLSX.utils.book_append_sheet(wb, ws, item);
+    return item;
+  });
+  downloadXLSX(wb, "report.xlsx");
+};
+
+export const downloadForms2Xls = (forms = []) => {
+  if (!forms.length) return;
+  const wb = XLSX.utils.book_new();
+  const trimmedForms = forms.map((item, index) => {
+    const { _id, __v, ...form } = item;
+    return form;
+  });
+  const ws = XLSX.utils.json_to_sheet(trimmedForms);
+  XLSX.utils.book_append_sheet(wb, ws, "Forms");
+  downloadXLSX(wb, "forms.xlsx");
 };
 
 function descendingComparator(a, b, orderBy) {
