@@ -32,3 +32,4 @@ export const PAYMENT_MODE_CONST = {
   online: "Online",
 };
 export const Page404 = "Page not found, go home!";
+export const GrandTotal = "Grand Total";

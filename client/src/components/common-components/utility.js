@@ -1,6 +1,7 @@
 import ReactPDF from "@react-pdf/renderer";
 import {
   CHAIRS_UNIT,
+  GrandTotal,
   MARKAZ_CONST,
   PAYMENT_MODE_CONST,
   ZABIHAT_UNIT,
@@ -66,8 +67,9 @@ const downloadPDF = (blob, fileName) => {
   const url = window.URL.createObjectURL(blob);
   let aTag = document.createElement("a");
   aTag.href = url;
+  aTag.setAttribute("target", "_blank");
   aTag.style = "display: none";
-  aTag.download = fileName;
+  // aTag.download = fileName;
   document.body.appendChild(aTag);
   aTag.click();
   return;
@@ -225,6 +227,86 @@ export const getDashboardMetric = (forms = []) => {
         children: 0,
       },
     }
+  );
+};
+
+const getMonthName = (month) => {
+  switch (month) {
+    case 0:
+      return "Jan";
+    case 1:
+      return "Feb";
+    case 2:
+      return "Mar";
+    case 3:
+      return "Apr";
+    case 4:
+      return "May";
+    case 5:
+      return "Jun";
+    case 6:
+      return "Jul";
+    case 7:
+      return "Aug";
+    case 8:
+      return "Sep";
+    case 9:
+      return "Oct";
+    case 10:
+      return "Nov";
+    case 11:
+      return "Dec";
+    default:
+      return "Jan";
+  }
+};
+
+const amountByMode = (
+  mode,
+  currA = { collection: 0, cash: 0, cheque: 0, online: 0 },
+  newA = 0
+) => {
+  currA.collection += newA;
+  switch (mode?.toLowerCase()) {
+    case "cash":
+      currA.cash += Number(newA);
+      break;
+    case "cheque":
+      currA.cheque += Number(newA);
+      break;
+    case "online":
+      currA.online += Number(newA);
+      break;
+    default:
+      break;
+  }
+  return currA;
+};
+export const getReceiptMetric = (receipts = []) => {
+  return receipts.reduce(
+    (acc, receipt) => {
+      const thisDate = new Date(receipt.date);
+      const dateStr =
+        thisDate.getDate() +
+        "-" +
+        getMonthName(thisDate.getMonth()) +
+        "-" +
+        thisDate.getFullYear();
+      acc[GrandTotal] = {
+        ...amountByMode(receipt.mode, acc[GrandTotal], receipt.amount),
+      };
+      if (acc[dateStr]) {
+        acc[dateStr] = {
+          ...amountByMode(receipt.mode, acc[dateStr], receipt.amount),
+        };
+      } else {
+        acc[dateStr] = {
+          ...amountByMode(receipt.mode, undefined, receipt.amount),
+        };
+      }
+      return acc;
+    },
+    { [GrandTotal]: { collection: 0, cash: 0, cheque: 0, online: 0 } }
   );
 };
 

@@ -9,10 +9,20 @@ import {
   TableRow,
 } from "@mui/material";
 import React from "react";
-import { CHAIRS_UNIT, MARKAZ_CONST, ZABIHAT_UNIT } from "../../constants";
+import {
+  CHAIRS_UNIT,
+  GrandTotal,
+  MARKAZ_CONST,
+  ZABIHAT_UNIT,
+} from "../../constants";
 import { formService } from "../../services/formService";
-import { GET_FORMS } from "../../store/actionTypes";
-import { getDashboardMetric, useCustomHook } from "../common-components";
+import { receiptService } from "../../services/receiptService";
+import { GET_FORMS, GET_RECEIPTS } from "../../store/actionTypes";
+import {
+  getDashboardMetric,
+  getReceiptMetric,
+  useCustomHook,
+} from "../common-components";
 import Header from "../Header";
 import BarChart from "./BarChart";
 import RadialBar from "./RadialBar";
@@ -21,15 +31,30 @@ const Dashboard = () => {
   const { state, dispatch, startLoading, endLoading, addToastMsg } =
     useCustomHook();
   const [dashboardMetric, setDashboardMetric] = React.useState({});
+  const [receiptMetric, setReceiptMetric] = React.useState({});
+
   React.useEffect(() => {
     const t = async () => {
       try {
         startLoading();
-        const res = await formService.getForms();
-        if (res.isOK) {
+        const res = await Promise.all([
+          formService.getForms().catch((e) => {
+            addToastMsg("unable to fetch form details", "error");
+          }),
+          receiptService.getReceipts().catch((e) => {
+            addToastMsg("unable to fetch receipt details", "error");
+          }),
+        ]);
+        if (res?.[0]?.isOK) {
           dispatch({
             type: GET_FORMS,
-            payload: res.data,
+            payload: res[0].data,
+          });
+        }
+        if (res?.[1]?.isOK) {
+          dispatch({
+            type: GET_RECEIPTS,
+            payload: res[1].data,
           });
         }
       } catch (e) {
@@ -46,6 +71,10 @@ const Dashboard = () => {
     setDashboardMetric(getDashboardMetric(state.forms));
   }, [state.forms, setDashboardMetric]);
 
+  React.useEffect(() => {
+    setReceiptMetric(getReceiptMetric(state.receipts));
+  }, [state.receipts, setReceiptMetric]);
+
   // No Data Scenario
   return (
     <>
@@ -60,6 +89,71 @@ const Dashboard = () => {
           <Grid item xs={6}>
             <Paper>
               <BarChart dashboardMetric={dashboardMetric} />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper>
+              <TableContainer>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: "bold" }}>Date</TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        By Cash
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        By Cheque
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        Online
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        Total Collection
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {Object.keys(receiptMetric).map((key) => {
+                      return (
+                        key !== GrandTotal && (
+                          <TableRow key={key}>
+                            <TableCell>{key}</TableCell>
+                            <TableCell align="right">
+                              {receiptMetric[key].cash ?? 0}
+                            </TableCell>
+                            <TableCell align="right">
+                              {receiptMetric[key].cheque ?? 0}
+                            </TableCell>
+                            <TableCell align="right">
+                              {receiptMetric[key].online ?? 0}
+                            </TableCell>
+                            <TableCell align="right">
+                              {receiptMetric[key].collection ?? 0}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      );
+                    })}
+                    <TableRow key={GrandTotal}>
+                      <TableCell sx={{ fontWeight: "bold" }}>
+                        {GrandTotal}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        {receiptMetric[GrandTotal].cash ?? 0}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        {receiptMetric[GrandTotal].cheque ?? 0}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        {receiptMetric[GrandTotal].online ?? 0}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: "bold" }} align="right">
+                        {receiptMetric[GrandTotal].collection ?? 0}
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Paper>
           </Grid>
           <Grid item xs={12}>
