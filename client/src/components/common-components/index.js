@@ -8,6 +8,7 @@ import {
   getDashboardMetric,
   radialChartConfig,
   barChartConfig,
+  getReceiptMetric,
 } from "./utility";
 import { useCustomHook } from "./customHooks";
 import { VirtualizedTable, StickyHeaderTable } from "./VirtualizedTable";
@@ -24,4 +25,5 @@ export {
   getDashboardMetric,
   radialChartConfig,
   barChartConfig,
+  getReceiptMetric,
 };

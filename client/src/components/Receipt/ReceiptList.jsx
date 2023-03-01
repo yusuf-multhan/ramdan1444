@@ -122,7 +122,7 @@ const RowDetails = (row) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.subReceipts.map((receipt) => {
+                  {row.subReceipts?.map((receipt) => {
                     return (
                       <TableRow key={receipt.receiptNo}>
                         <TableCell component="th" scope="row">
