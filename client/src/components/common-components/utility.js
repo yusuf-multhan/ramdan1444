@@ -112,6 +112,19 @@ const downloadXLSX = (workbook, filename) => {
   FileSaver.saveAs(data, filename);
 };
 
+const getXLSReceiptList = (receipt = {}) => {
+  return {
+    "Receipt No": receipt.receiptNo,
+    "Form No": receipt.formNo,
+    Markaz: receipt.markaz,
+    "HOF ID": receipt.HOFId,
+    "HOF Name": receipt.HOFName,
+    Mode: receipt.mode,
+    Amount: receipt.amount,
+    Remarks: receipt.details,
+  };
+};
+
 export const downloadReceipts2Xls = (receipts = []) => {
   if (!receipts.length) return;
   const receiptsObj = receipts.reduce((acc, receiptFull) => {
@@ -124,9 +137,9 @@ export const downloadReceipts2Xls = (receipts = []) => {
       "-" +
       thisDate.getFullYear();
     if (acc[dateStr]) {
-      acc[dateStr].push({ ...receipt, date: dateStr });
+      acc[dateStr].push(getXLSReceiptList(receipt));
     } else {
-      acc[dateStr] = [{ ...receipt, date: dateStr }];
+      acc[dateStr] = [getXLSReceiptList(receipt)];
     }
     return acc;
   }, {});
@@ -144,7 +157,22 @@ export const downloadForms2Xls = (forms = []) => {
   const wb = XLSX.utils.book_new();
   const trimmedForms = forms.map((item, index) => {
     const { _id, __v, ...form } = item;
-    return form;
+    return {
+      "Form No": form.formNo,
+      Markaz: form.markaz,
+      "HOF ID": form.HOFId,
+      "HOF Name": form.HOFName,
+      "HOF Phone": form.HOFPhone,
+      Takhmeen: form.takhmeenAmount,
+      "Zabihat count": form.zabihat,
+      Iftaari: form.iftaari,
+      "Chair count": form.chairs,
+      "Total takhmeen": form.grandTotal,
+      "Paid amount": form.paidAmount,
+      "Pending amount": form.pendingAmount,
+      "Submitted by": form.submitter,
+      Comments: form.comments,
+    };
   });
   const ws = XLSX.utils.json_to_sheet(trimmedForms);
   XLSX.utils.book_append_sheet(wb, ws, "Forms");
