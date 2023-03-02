@@ -14,6 +14,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^5.2.3",
     "dayjs": "^1.11.7",
+    "file-saver": "^2.0.5",
     "gzipper": "^7.2.0",
     "nanoid": "^4.0.1",
     "react": "^18.2.0",
@@ -25,6 +26,7 @@
     "react-scripts": "^5.0.1",
     "react-virtuoso": "^4.1.0",
     "sass": "^1.58.0",
+    "sheetjs-style": "^0.15.8",
     "to-words": "^3.4.0"
   },
   "proxy": "http://localhost:4000",

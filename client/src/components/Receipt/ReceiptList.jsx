@@ -21,8 +21,12 @@ import { StickyHeaderTable, useCustomHook } from "../common-components";
 import { receiptService } from "../../services/receiptService";
 import {
   downloadReceipts,
+  downloadReceipts2Xls,
   sortReceiptsByHOF,
 } from "../common-components/utility";
+import { FormGroup } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import AddBox from "@mui/icons-material/AddBox";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -166,8 +170,10 @@ const FixedHeaderContent = () => {
 };
 
 export default function FormList() {
+  const navigate = useNavigate();
   const { state, dispatch, startLoading, endLoading, addToastMsg } =
     useCustomHook();
+  const [rowReceipts, setRowReceipts] = React.useState([]);
   const [origRows, setOrigRows] = React.useState([]);
   const [rows, setRows] = React.useState([]);
 
@@ -190,6 +196,7 @@ export default function FormList() {
     try {
       const { data, isOK } = await receiptService.getReceipts();
       if (isOK) {
+        setRowReceipts(data);
         dispatch({
           type: GET_RECEIPTS,
           payload: sortReceiptsByHOF(data),
@@ -235,6 +242,26 @@ export default function FormList() {
             inputProps={{ "aria-label": "search" }}
           />
         </Search>
+        <FormGroup row>
+          <IconButton
+            size="large"
+            color="secondary"
+            onClick={() => {
+              downloadReceipts2Xls(rowReceipts);
+            }}
+          >
+            <DownloadIcon />
+          </IconButton>
+          <IconButton
+            color="secondary"
+            size="large"
+            onClick={() => {
+              navigate("/newreceipt");
+            }}
+          >
+            <AddBox fontSize="inherit" />
+          </IconButton>
+        </FormGroup>
       </div>
       <StickyHeaderTable
         rows={rows}

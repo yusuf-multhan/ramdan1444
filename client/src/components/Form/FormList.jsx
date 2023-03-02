@@ -26,6 +26,7 @@ import {
 } from "../../constants";
 import Header from "../Header";
 import {
+  downloadForms2Xls,
   downLoadPasses,
   filterRows,
   getGrandTotal,
@@ -217,7 +218,7 @@ const FixedHeaderContent = (props) => {
   const { orderBy, order, sortHandler } = props ?? {};
   return (
     <TableRow>
-      <TableCell style={{ fontWeight: "bold" }}>Form no.</TableCell>
+      <TableCell style={{ fontWeight: "bold" }}>Form No</TableCell>
       <TableCell style={{ fontWeight: "bold" }}>Markaz</TableCell>
       <TableCell style={{ fontWeight: "bold" }}>HOF ID</TableCell>
       <TableCell style={{ fontWeight: "bold" }}>HOF Name</TableCell>
@@ -256,7 +257,9 @@ const FixedHeaderContent = (props) => {
           Pending amount
         </TableSortLabel>
       </TableCell>
-      <TableCell style={{ fontWeight: "bold" }}>Download</TableCell>
+      <TableCell style={{ fontWeight: "bold" }} align="center">
+        Download
+      </TableCell>
     </TableRow>
   );
 };
@@ -332,6 +335,11 @@ export default function FormList() {
     };
   }, [filters, setFilters]);
 
+  const dowloadForms = React.useMemo(() => {
+    return () => {
+      downloadForms2Xls(rows);
+    };
+  }, [rows]);
   return (
     <>
       <Header header={FORM_LIST_HEADER} />
@@ -375,15 +383,26 @@ export default function FormList() {
             );
           })}
         </FormGroup>
-        <IconButton
-          color="secondary"
-          size="large"
-          onClick={() => {
-            navigate("/newform");
-          }}
-        >
-          <AddBox fontSize="inherit" />
-        </IconButton>
+        <FormGroup row>
+          <IconButton
+            size="large"
+            color="secondary"
+            onClick={() => {
+              dowloadForms();
+            }}
+          >
+            <DownloadIcon />
+          </IconButton>
+          <IconButton
+            color="secondary"
+            size="large"
+            onClick={() => {
+              navigate("/newform");
+            }}
+          >
+            <AddBox fontSize="inherit" />
+          </IconButton>
+        </FormGroup>
       </div>
       {
         <StickyHeaderTable

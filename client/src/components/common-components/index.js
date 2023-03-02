@@ -9,6 +9,8 @@ import {
   radialChartConfig,
   barChartConfig,
   getReceiptMetric,
+  downloadReceipts2Xls,
+  downloadForms2Xls,
 } from "./utility";
 import { useCustomHook } from "./customHooks";
 import { VirtualizedTable, StickyHeaderTable } from "./VirtualizedTable";
@@ -26,4 +28,6 @@ export {
   radialChartConfig,
   barChartConfig,
   getReceiptMetric,
+  downloadReceipts2Xls,
+  downloadForms2Xls,
 };
