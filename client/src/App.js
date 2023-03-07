@@ -27,7 +27,7 @@ const App = () => {
           <Route path={"/formlist"} element={<FormList />} />
           <Route path={"/newreceipt"} element={<Receipt />} />
           <Route path={"/receiptlist"} element={<ReceiptList />} />
-          <Route path={"/dashboard"} element={<Dashboard />} />
+          <Route path={"/dashview"} element={<Dashboard />} />
           <Route
             path={"*"}
             element={
