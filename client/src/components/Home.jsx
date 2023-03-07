@@ -77,10 +77,11 @@ export default function Home() {
         </div>
         <div className="mt-2">
           <Button
+            disabled
             variant="contained"
             startIcon={<ChartIcon />}
             onClick={() => {
-              navigate("/dashboard");
+              navigate("/dashview");
             }}
           >
             Dashboard
