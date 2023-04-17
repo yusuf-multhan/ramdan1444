@@ -305,6 +305,7 @@ const Receipt = (props) => {
                     backgroundColor: "green",
                     margin: "5px",
                   }}
+                  disabled={takhmeenDetails.pendingAmount === 0}
                 >
                   {props.isEdit ? "Update" : "Submit"}
                 </Button>

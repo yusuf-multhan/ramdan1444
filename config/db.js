@@ -24,6 +24,7 @@ const connectDB = async () => {
     countersModel
       .insertMany([{ _id: "RECEIPTS" }])
       .catch((e) => console.log("Counter already present!!!", e.message));
+    return database;
   } catch (error) {
     console.log(`Error connecting to DB: ${error.message}`);
     process.exit(1);
